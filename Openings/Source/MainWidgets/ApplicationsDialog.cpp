@@ -191,12 +191,12 @@ void ApplicationsDialog::ShowTableContextMenu(const QPoint &p)
     });
   }
 
-  if (ApplicationModel::CanDeny(selectedApplication, user)) {
-    actions.push_back(std::make_unique<QAction>("Close application", ui->applicationTable));
+  if (ApplicationModel::CanCancel(selectedApplication, user)) {
+    actions.push_back(std::make_unique<QAction>("Cancel application", ui->applicationTable));
     connect(actions.back().get(), &QAction::triggered, [this, &selectedApplication] (bool) {
       try {
-        ApplicationModel::DenyApplication(selectedApplication.id, user);
-        QMessageBox::information(this, "Info", "Application closed");
+        ApplicationModel::CancelApplication(selectedApplication.id, user);
+        QMessageBox::information(this, "Info", "Application cancelled");
         Reload();
       }
       catch (std::exception& ex) {
